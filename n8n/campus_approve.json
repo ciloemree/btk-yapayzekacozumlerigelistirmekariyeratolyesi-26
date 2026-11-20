@@ -1,0 +1,88 @@
+{
+  "name": "BTK — Kampüs Destek / İnsan Onayı",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "campus-approve",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook",
+      "name": "Webhook — campus-approve",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        200,
+        280
+      ],
+      "webhookId": "btk-campus-approve"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8000/approve",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({thread_id: $json.body.thread_id ?? \"\", approved: $json.body.approved}) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "http",
+      "name": "FastAPI — approve",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        450,
+        280
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "respond",
+      "name": "Onay Sonucunu Döndür",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        700,
+        280
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook — campus-approve": {
+      "main": [
+        [
+          {
+            "node": "FastAPI — approve",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FastAPI — approve": {
+      "main": [
+        [
+          {
+            "node": "Onay Sonucunu Döndür",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "pinData": {},
+  "tags": []
+}

@@ -8,4 +8,4 @@ DB_DIR = ROOT / "chroma_kampus"
 COLLECTION = "kampus_belgeleri_v1"
 OLLAMA_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 EMBED_MODEL = os.getenv("EMBED_MODEL", "embeddinggemma")
-CHAT_MODEL = os.getenv("CHAT_MODEL", "qwen2.5:1.5b")
+CHAT_MODEL = os.getenv("CHAT_MODEL", "qwen2.5:3b")

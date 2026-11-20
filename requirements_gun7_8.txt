@@ -1,0 +1,9 @@
+# Önceki günün requirements.txt dosyasındaki paketler de kurulu olmalı.
+langgraph>=0.6,<2
+langgraph-checkpoint-sqlite>=2,<4
+langchain-ollama>=0.3,<2
+langchain-core>=0.3,<2
+mcp>=1.10,<2
+fastapi>=0.110,<1
+uvicorn>=0.30,<1
+requests>=2.31,<3
